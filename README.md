@@ -7,7 +7,7 @@ A simple Flask application that performs image upload and generates on the trans
 
 1. Install [Python](http://www.python.org/getit/)   
 2. Install [Cloudinary python egg](https://github.com/cloudinary/pycloudinary#setup)  
-    `pip install cloudinaty`
+    `pip install cloudinary`
 3. Get [a cloudinary account](https://cloudinary.com/users/register/free)
 4. Copy the `cloudinary configuration` environment variables from the [Management Console](https://cloudinary.com/console):
 5. Add the cloudinary configuration to the app.py file as following:
