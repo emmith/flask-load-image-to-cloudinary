@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+  <title>Upload new Image</title>
+  <!-- 按钮的css -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+  <!-- 代码高亮的css -->
+  <link href="{{ url_for('static', filename='css/prism.css') }}" rel="stylesheet" />
+  <!-- 复制成功提示框 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" type="text/css"/>
+</head>
+<h1>Upload new Image</h1>
+<form action="" method="post" enctype="multipart/form-data">
+  <p>
+    <input type="file" name="file" />
+    <input type="submit" value="Upload" />
+  </p>
+</form>
+
+{% if upload_result %}
+<h3>Upload API Result</h3>
+<div>{{ upload_result }}</div>
+https链接:
+<div>
+  <code class="language-html" id='code-heap'>
+    {{ upload_result['secure_url'] }}
+  </code>
+  <button class="btn" data-clipboard-target="#code-heap" id=btn1>
+    <img src="https://clipboardjs.com/assets/images/clippy.svg" width=13 "Copy to clipboard">
+  </button>
+</div>
+<h3>Thumbnails:</h3>
+<div><a href="{{thumbnail_url1}}">{{thumbnail_url1}}</a></div>
+<img src="{{ thumbnail_url1 }}" />
+<div><a href="{{thumbnail_url2}}">{{thumbnail_url2}}</a></div>
+<img src="{{ thumbnail_url2 }}" />
+<h3>Original:</h3>
+<img src="{{ upload_result['url'] }}" />
+{% endif %}
+
+<!-- 复制主要是通过clipboard.min.js来实现，具体可以查看clipboard.com -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js" ></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" ></script>
+<!-- 复制的事件 -->
+<script>
+  var btns = document.querySelectorAll('button');
+  var clipboard = new ClipboardJS(btns);
+
+  clipboard.on('success', function(e) {
+    console.log(e);
+  });
+
+  clipboard.on('error', function(e) {
+    console.log(e);
+  });
+</script>
+<!-- 复制成功提示的事件 -->
+<script>
+  $('#btn1').click(function () {
+    toastr.options = {  
+            closeButton: false,  
+            debug: false,  
+            progressBar: false,  
+            positionClass: "toast-top-center",  
+            onclick: null,  
+            showDuration: "300",  
+            hideDuration: "1000",  
+            timeOut: "1000",  
+            extendedTimeOut: "1000",  
+            showEasing: "swing",  
+            hideEasing: "linear",  
+            showMethod: "fadeIn",  
+            hideMethod: "fadeOut"  
+        };  
+        toastr.info("复制成功");
+    });
+</script>
+<!-- 代码高亮 -->
+<script src="{{ url_for('static', filename='js/prism.js') }}"></script>
+</html>
